@@ -1,7 +1,11 @@
 import React from "react";
 import TarefaLista from "../components/TarefaLista";
+import TarefaForm from "../components/TarefaForm";
+
 const Home = () => {
   const [tarefas, SetTarefas] = React.useState([
+    //tarefas → os dados
+    //setTarefas → quem altera os dados
     {
       id: 1,
       titulo: "Estudar React",
@@ -18,11 +22,15 @@ const Home = () => {
     },
   ]);
 
+  const adicionarTarefa = (newTarefa) => {
+    SetTarefas([...tarefas, newTarefa]);
+  };
+
   return (
     <div>
       <h1>Minhas Tarefas</h1>
-
-      <TarefaLista  tarefa={tarefas}/>
+      <TarefaForm adicionarTarefa={adicionarTarefa} />
+      <TarefaLista tarefas={tarefas} />
     </div>
   );
 };
