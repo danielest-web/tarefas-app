@@ -1,29 +1,48 @@
 import React from "react";
 
-const TarefaForm = ({ adicionarTarefa }) => {
+const TarefaForm = ({ adicionarTarefa, tarefaEditando, atualizarTarefa , cancelarEdicao}) => {
+
   const [titulo, setTitulo] = React.useState("");
   const [descricao, setDescricao] = React.useState("");
   const [data, setData] = React.useState("");
   const [status, setStatus] = React.useState("pendente");
 
+  React.useEffect(()=>{
+    if(tarefaEditando){
+      setTitulo(tarefaEditando.titulo);
+      setDescricao(tarefaEditando.descricao);
+      setData(tarefaEditando.data);
+      setStatus(tarefaEditando.status);
+    }
+  },[tarefaEditando]);
+
   const handleSubmit = ( event ) => {
     event.preventDefault();
 
     const newTarefa = {
-      id: Date.now(),
+      id: tarefaEditando ? tarefaEditando.id : Date.now(),
       titulo,
       descricao,
       data,
       status,
     };
 
-    adicionarTarefa(newTarefa);
+    if(tarefaEditando){
+      atualizarTarefa(newTarefa)
+ 
+    }else{
+      adicionarTarefa(newTarefa)
+    }
+
+    cancelarEdicao();
+
     //limpar formulario
 
     setTitulo("");
     setDescricao("");
     setData("");
     setStatus("pendente");
+
   };
 
   return (
@@ -49,7 +68,7 @@ const TarefaForm = ({ adicionarTarefa }) => {
         <option value="pendente">Pendente</option>
         <option value="concluida">Concluido</option>
       </select>
-      <button type="submit">Adicionar</button>
+      <button type="submit">{tarefaEditando ? "Salvar" : "Adicionar"}</button>
     </form>
   );
 };

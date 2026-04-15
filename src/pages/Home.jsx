@@ -22,15 +22,39 @@ const Home = () => {
     },
   ]);
 
+  const [tarefaEditando, setTarefaEditando] = React.useState(null);
+
+  const editarTarefa = (tarefa) => {
+    //console.log("EDITANDO: " ,tarefa)
+    setTarefaEditando(tarefa);
+  };
+
+  const cancelarEdicao = () => {
+    setTarefaEditando(null);
+  };
+
+  const atualizarTarefa = (tarefaAtualizada) => {
+    SetTarefas(
+      tarefas.map((t) => (t.id === tarefaAtualizada.id ? tarefaAtualizada : t)),
+    );
+    setTarefaEditando(null);
+  };
+
   const adicionarTarefa = (newTarefa) => {
     SetTarefas([...tarefas, newTarefa]);
+    console.log(newTarefa);
   };
 
   return (
     <div>
       <h1>Minhas Tarefas</h1>
-      <TarefaForm adicionarTarefa={adicionarTarefa} />
-      <TarefaLista tarefas={tarefas} />
+      <TarefaForm
+        adicionarTarefa={adicionarTarefa}
+        tarefaEditando={tarefaEditando}
+        atualizarTarefa={atualizarTarefa}
+        cancelarEdicao={cancelarEdicao}
+      />
+      <TarefaLista tarefas={tarefas} editarTarefa={editarTarefa} />
     </div>
   );
 };

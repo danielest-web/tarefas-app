@@ -1,11 +1,12 @@
 import TarefaItem from "./TarefaItem";
 
-const TarefaLista = ({ tarefas }) => {
+const TarefaLista = ({ tarefas, editarTarefa }) => {
   return (
     <div>
       {tarefas.map((tarefa) => (
-        <TarefaItem key={tarefa.id} tarefa={tarefa} />
+        <TarefaItem key={tarefa.id} tarefa={tarefa} editarTarefa={editarTarefa}/>
       ))}
+    
     </div>
   );
 };
